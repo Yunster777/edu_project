@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Post {% if form.instance.id %}Edit{% else %}Create{% endif %}</h1>
+	<form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">저장하기</button>
+        
+        {% if form.instance.id %}
+            <a href="{% url "edu:post_detail" post.id %}" class="btn btn-secondary">돌아가기</a>
+        {% else %}
+            <a href="{% url "edu:post_list" %}" class="btn btn-secondary">돌아가기</a>
+        {% endif %}
+    </form>
+    
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Post Detail</h1>
+    <div>
+        <h2>제목</h2>
+        <p>{{ post.title }}</p>
+    </div>
+    <div>
+        <h2>내용</h2>
+        <p>{{ post.content|linebreaksbr }}</p>
+    </div>
+    <div>
+        <h2>작성일</h2>
+        <p>{{ post.created_at|date:"Y년 m월 d일(D) H:i:s" }}</p>
+    </div>
+
+    <div>
+        <h2>댓글</h2>
+        {% if post.comment_set.count > 0 %}
+            <ul>
+                {% for comment in post.comment_set.all %}
+                    <li>[{{ comment.pk }}] {{ comment.content|linebreaksbr }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>댓글이 없습니다.</p>
+        {% endif %}
+
+    </div>
+
+    <a href="{% url "edu:post_edit" post.id %}" class="btn btn-primary">수정하기</a>
+    <a href="{% url "edu:post_list" %}" class="btn btn-secondary">목록으로</a>
+    <br/><br/>
+    <a href="{% url "edu:post_delete" post.id %}" class="btn btn-danger">삭제하기</a>
+
+{% endblock %}
